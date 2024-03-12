@@ -13,12 +13,12 @@ public class UserView {
         this.userController = userController;
     }
 
-    public void run(){
+    public void run() {
         Commands com;
 
         while (true) {
             String command = prompt("Введите команду: ");
-            com = Commands.valueOf(command);
+            com = Commands.valueOf(command.toUpperCase());
             if (com == Commands.EXIT) return;
             switch (com) {
                 case CREATE:
@@ -38,6 +38,17 @@ public class UserView {
                 case UPDATE:
                     String userId = prompt("Enter user id: ");
                     userController.updateUser(userId, createUser());
+                    break;
+                case DELETE:
+                    String idForDelete = prompt("Введите ID контакта для удаления:");
+                    userController.deleteUser(Long.parseLong(idForDelete));
+                    break;
+                case READALL:
+                    System.out.println(userController.allUsers());
+                    break;
+                case FINDBYID:
+                    String idForFinding = prompt("Введите ID контакта");
+                    userController.findById(Long.parseLong(idForFinding));
             }
         }
     }
