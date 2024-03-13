@@ -4,7 +4,10 @@ import notebook.controller.UserController;
 import notebook.model.User;
 import notebook.util.Commands;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 public class UserView {
     private final UserController userController;
@@ -17,6 +20,9 @@ public class UserView {
         Commands com;
 
         while (true) {
+
+            System.out.println("Список доступных команд:");
+            System.out.println(Arrays.toString(Commands.values()));
             String command = prompt("Введите команду: ");
             com = Commands.valueOf(command.toUpperCase());
             if (com == Commands.EXIT) return;
@@ -49,6 +55,16 @@ public class UserView {
                 case FINDBYID:
                     String idForFinding = prompt("Введите ID контакта");
                     userController.findById(Long.parseLong(idForFinding));
+                    break;
+                case LIST:
+                    System.out.println("Список доступных команд:");
+                    System.out.println(Arrays.toString(Commands.values()));
+                    break;
+//                case CLEAR:
+//                    userController.clear();
+                default:
+                    System.out.println("Введена неверная команда.");
+                    break;
             }
         }
     }
@@ -58,11 +74,20 @@ public class UserView {
         System.out.print(message);
         return in.nextLine();
     }
-
+    public String checkLine(String str) {
+        str = str.trim().replace(" ", "");
+        if (!str.isEmpty()) {
+            return str;
+        } else {
+            System.out.println("Значение не может быть пустым.\n");
+            str = prompt("Введите корректные данные: ");
+            return checkLine(str);
+        }
+    }
     private User createUser() {
-        String firstName = prompt("Имя: ");
-        String lastName = prompt("Фамилия: ");
-        String phone = prompt("Номер телефона: ");
+        String firstName = checkLine(prompt("Имя: "));
+        String lastName = checkLine(prompt("Фамилия: "));
+        String phone = checkLine(prompt("Номер телефона: "));
         return new User(firstName, lastName, phone);
     }
 }

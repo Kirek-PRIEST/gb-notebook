@@ -1,6 +1,6 @@
 package notebook.model.repository.impl;
 
-import notebook.model.dao.impl.FileOperation;
+//import notebook.model.dao.impl.FileOperation;
 import notebook.util.DBConnector;
 import notebook.util.mapper.impl.UserMapper;
 import notebook.model.User;
@@ -13,16 +13,22 @@ import java.util.Optional;
 
 public class UserRepository implements GBRepository {
     private final UserMapper mapper;
-    private final FileOperation operation;
 
-    public UserRepository(FileOperation operation) {
+
+    public UserRepository() {
         this.mapper = new UserMapper();
-        this.operation = operation;
-    }
+
+        try (FileWriter writer = new FileWriter(DBConnector.DB_PATH, true)) {
+                writer.flush();
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
 
     @Override
     public List<User> findAll() {
-        List<String> lines = operation.readAll();
+        List<String> lines = readAll();
         List<User> users = new ArrayList<>();
         for (String line : lines) {
             users.add(mapper.toOutput(line));
@@ -89,6 +95,19 @@ public class UserRepository implements GBRepository {
         write(users);
         return true;
     }
+//    @Override
+//
+//    public boolean clear() {
+//        List<User> users = findAll();
+//        System.out.println("Контакты удалены!");
+//        for (int i = 0; i < users.size(); i++){
+//            System.out.println("контакт" + i + "Удалён" );
+//            users.remove(i);
+//        }
+//
+//        write(users);
+//        return true;
+//    }
 
 
     private void write(List<User> users) {
@@ -96,7 +115,7 @@ public class UserRepository implements GBRepository {
         for (User u : users) {
             lines.add(mapper.toInput(u));
         }
-        operation.saveAll(lines);
+        saveAll(lines);
     }
     @Override
     public List<String> readAll() {

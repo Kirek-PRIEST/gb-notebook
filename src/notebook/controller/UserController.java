@@ -41,5 +41,8 @@ public class UserController {
     public void findById(Long id){
         System.out.println(repository.findById(id));
     }
+//    public void clear(){
+//        repository.clear();
+//    }
 
 }
