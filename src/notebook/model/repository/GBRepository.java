@@ -13,6 +13,6 @@ public interface GBRepository {
     boolean delete(Long id);
     List<String> readAll();
     void saveAll(List<String> data);
-//    boolean clear();
+    boolean clear();
 }
 

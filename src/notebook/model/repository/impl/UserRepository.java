@@ -95,19 +95,13 @@ public class UserRepository implements GBRepository {
         write(users);
         return true;
     }
-//    @Override
-//
-//    public boolean clear() {
-//        List<User> users = findAll();
-//        System.out.println("Контакты удалены!");
-//        for (int i = 0; i < users.size(); i++){
-//            System.out.println("контакт" + i + "Удалён" );
-//            users.remove(i);
-//        }
-//
-//        write(users);
-//        return true;
-//    }
+   @Override
+
+   public boolean clear() {List<User> users = new ArrayList<>();
+        System.out.println("Контакты удалены!");
+        write(users);
+        return true;
+    }
 
 
     private void write(List<User> users) {

@@ -20,7 +20,7 @@ public class UserView {
         Commands com;
 
         while (true) {
-
+            System.out.println();
             System.out.println("Список доступных команд:");
             System.out.println(Arrays.toString(Commands.values()));
             String command = prompt("Введите команду: ");
@@ -60,8 +60,8 @@ public class UserView {
                     System.out.println("Список доступных команд:");
                     System.out.println(Arrays.toString(Commands.values()));
                     break;
-//                case CLEAR:
-//                    userController.clear();
+               case CLEAR:
+                   userController.clear();
                 default:
                     System.out.println("Введена неверная команда.");
                     break;
